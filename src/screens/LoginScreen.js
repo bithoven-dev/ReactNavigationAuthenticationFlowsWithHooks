@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {Heading} from '../components/Heading';
 import {Input} from '../components/Input';
@@ -7,8 +7,13 @@ import {FilledButton} from '../components/FilledButton';
 import {TextButton} from '../components/TextButton';
 import {Error} from '../components/Error';
 import {AuthContainer} from '../components/AuthContainer';
+import {AuthContext} from '../contexts/AuthContext';
 
 export function LoginScreen({navigation}) {
+  const {login} = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState('bithovendev@gmail.com');
+  const [password, setPassword] = React.useState('abc');
+
   return (
     <AuthContainer>
       <Heading style={styles.title}>LOGIN</Heading>
@@ -17,12 +22,22 @@ export function LoginScreen({navigation}) {
         style={styles.input}
         placeholder={'Email'}
         keyboardType={'email-address'}
+        value={email}
+        onChangeText={setEmail}
       />
-      <Input style={styles.input} placeholder={'Password'} secureTextEntry />
+      <Input
+        style={styles.input}
+        placeholder={'Password'}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
       <FilledButton
         title={'Login'}
         style={styles.loginButton}
-        onPress={() => {}}
+        onPress={() => {
+          login();
+        }}
       />
       <TextButton
         title={'Have u an account? Create one'}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {Heading} from '../components/Heading';
 import {Input} from '../components/Input';
@@ -7,8 +7,13 @@ import {FilledButton} from '../components/FilledButton';
 import {Error} from '../components/Error';
 import {IconButton} from '../components/IconButton';
 import {AuthContainer} from '../components/AuthContainer';
+import {AuthContext} from '../contexts/AuthContext';
 
 export function RegistrationScreen({navigation}) {
+  const {register} = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState('bithovendev@gmail.com');
+  const [password, setPassword] = React.useState('abc');
+
   return (
     <AuthContainer>
       <IconButton
@@ -24,12 +29,22 @@ export function RegistrationScreen({navigation}) {
         style={styles.input}
         placeholder={'Email'}
         keyboardType={'email-address'}
+        value={email}
+        onChangeText={setEmail}
       />
-      <Input style={styles.input} placeholder={'Password'} secureTextEntry />
+      <Input
+        style={styles.input}
+        placeholder={'Password'}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
       <FilledButton
         title={'Register'}
         style={styles.loginButton}
-        onPress={() => {}}
+        onPress={() => {
+          register(email, password);
+        }}
       />
     </AuthContainer>
   );
