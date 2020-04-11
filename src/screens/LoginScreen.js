@@ -8,16 +8,19 @@ import {TextButton} from '../components/TextButton';
 import {Error} from '../components/Error';
 import {AuthContainer} from '../components/AuthContainer';
 import {AuthContext} from '../contexts/AuthContext';
+import {Loading} from '../components/Loading';
 
 export function LoginScreen({navigation}) {
   const {login} = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('bithovendev@gmail.com');
   const [password, setPassword] = React.useState('abc');
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   return (
     <AuthContainer>
       <Heading style={styles.title}>LOGIN</Heading>
-      <Error error={''} />
+      <Error error={error} />
       <Input
         style={styles.input}
         placeholder={'Email'}
@@ -35,8 +38,14 @@ export function LoginScreen({navigation}) {
       <FilledButton
         title={'Login'}
         style={styles.loginButton}
-        onPress={() => {
-          login();
+        onPress={async () => {
+          try {
+            setLoading(true);
+            await login(email, password);
+          } catch (e) {
+            setError(e.message);
+            setLoading(false);
+          }
         }}
       />
       <TextButton
@@ -45,6 +54,7 @@ export function LoginScreen({navigation}) {
           navigation.navigate('Registration');
         }}
       />
+      <Loading loading={loading} />
     </AuthContainer>
   );
 }

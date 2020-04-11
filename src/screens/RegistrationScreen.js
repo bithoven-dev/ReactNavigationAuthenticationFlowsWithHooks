@@ -8,11 +8,14 @@ import {Error} from '../components/Error';
 import {IconButton} from '../components/IconButton';
 import {AuthContainer} from '../components/AuthContainer';
 import {AuthContext} from '../contexts/AuthContext';
+import {Loading} from '../components/Loading';
 
 export function RegistrationScreen({navigation}) {
   const {register} = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('bithovendev@gmail.com');
   const [password, setPassword] = React.useState('abc');
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   return (
     <AuthContainer>
@@ -24,7 +27,7 @@ export function RegistrationScreen({navigation}) {
         }}
       />
       <Heading style={styles.title}>REGISTRATION</Heading>
-      <Error error={''} />
+      <Error error={error} />
       <Input
         style={styles.input}
         placeholder={'Email'}
@@ -42,10 +45,18 @@ export function RegistrationScreen({navigation}) {
       <FilledButton
         title={'Register'}
         style={styles.loginButton}
-        onPress={() => {
-          register(email, password);
+        onPress={async () => {
+          try {
+            setLoading(true);
+            await register(email, password);
+            navigation.pop();
+          } catch (e) {
+            setError(e.message);
+            setLoading(false);
+          }
         }}
       />
+      <Loading loading={loading} />
     </AuthContainer>
   );
 }
