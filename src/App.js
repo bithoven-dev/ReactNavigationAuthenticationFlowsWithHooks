@@ -9,6 +9,7 @@ import {AuthContext} from './contexts/AuthContext';
 import {BASE_URL} from './config';
 import {sleep} from './utils/sleep';
 import {createAction} from './config/createAction';
+import {MainStackNavigator} from './navigators/MainStackNavigator';
 
 const RootStack = createStackNavigator();
 
@@ -20,6 +21,11 @@ export default function() {
           return {
             ...state,
             user: {...action.payload},
+          };
+        case 'REMOVE_USER':
+          return {
+            ...state,
+            user: undefined,
           };
         default:
           return state;
@@ -43,7 +49,7 @@ export default function() {
         dispatch(createAction('SET_USER', user));
       },
       logout: () => {
-        console.log('logout');
+        dispatch(createAction('REMOVE_USER'));
       },
       register: async (email, password) => {
         await sleep(2000);
@@ -57,16 +63,25 @@ export default function() {
     [],
   );
 
-  console.log(state.user);
-
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={{auth, user: state.user}}>
       <NavigationContainer theme={lightTheme}>
         <RootStack.Navigator
           screenOptions={{
             headerShown: false,
+            animationEnabled: false,
           }}>
-          <RootStack.Screen name={'AuthStack'} component={AuthStackNavigator} />
+          {state.user ? (
+            <RootStack.Screen
+              name={'MainStack'}
+              component={MainStackNavigator}
+            />
+          ) : (
+            <RootStack.Screen
+              name={'AuthStack'}
+              component={AuthStackNavigator}
+            />
+          )}
         </RootStack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

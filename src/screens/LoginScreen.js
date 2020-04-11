@@ -11,7 +11,9 @@ import {AuthContext} from '../contexts/AuthContext';
 import {Loading} from '../components/Loading';
 
 export function LoginScreen({navigation}) {
-  const {login} = React.useContext(AuthContext);
+  const {
+    auth: {login},
+  } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('bithovendev@gmail.com');
   const [password, setPassword] = React.useState('abc');
   const [loading, setLoading] = React.useState(false);
