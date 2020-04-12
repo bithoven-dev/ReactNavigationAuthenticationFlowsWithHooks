@@ -2,12 +2,11 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {HeaderIconButton} from '../components/HeaderIconButton';
 import {AuthContext} from '../contexts/AuthContext';
+import {UserContext} from '../contexts/UserContext';
 
-export function ProductsList({navigation}) {
-  const {
-    auth: {logout},
-    user,
-  } = React.useContext(AuthContext);
+export function ProductsListScreen({navigation}) {
+  const {logout} = React.useContext(AuthContext);
+  const user = React.useContext(UserContext);
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
