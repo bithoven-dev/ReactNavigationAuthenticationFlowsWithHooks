@@ -8,11 +8,29 @@ import {AuthContext} from './contexts/AuthContext';
 import {MainStackNavigator} from './navigators/MainStackNavigator';
 import {useAuth} from './hooks/useAuth';
 import {UserContext} from './contexts/UserContext';
+import {SplashScreen} from './screens/SplashScreen';
 
 const RootStack = createStackNavigator();
 
 export default function() {
   const {auth, state} = useAuth();
+
+  function renderScreens() {
+    if (state.loading) {
+      return <RootStack.Screen name={'Splash'} component={SplashScreen} />;
+    }
+    return state.user ? (
+      <RootStack.Screen name={'MainStack'}>
+        {() => (
+          <UserContext.Provider value={state.user}>
+            <MainStackNavigator />
+          </UserContext.Provider>
+        )}
+      </RootStack.Screen>
+    ) : (
+      <RootStack.Screen name={'AuthStack'} component={AuthStackNavigator} />
+    );
+  }
 
   return (
     <AuthContext.Provider value={auth}>
@@ -22,20 +40,7 @@ export default function() {
             headerShown: false,
             animationEnabled: false,
           }}>
-          {state.user ? (
-            <RootStack.Screen name={'MainStack'}>
-              {() => (
-                <UserContext.Provider value={state.user}>
-                  <MainStackNavigator />
-                </UserContext.Provider>
-              )}
-            </RootStack.Screen>
-          ) : (
-            <RootStack.Screen
-              name={'AuthStack'}
-              component={AuthStackNavigator}
-            />
-          )}
+          {renderScreens()}
         </RootStack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
