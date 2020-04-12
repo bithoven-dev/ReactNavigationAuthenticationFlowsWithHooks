@@ -1,13 +1,17 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
+import axios from 'axios';
+
 import {HeaderIconButton} from '../components/HeaderIconButton';
 import {AuthContext} from '../contexts/AuthContext';
 import {UserContext} from '../contexts/UserContext';
+import {Product} from '../components/Product';
+import {BASE_URL} from '../config';
+import {useGet} from '../hooks/useGet';
 
 export function ProductsListScreen({navigation}) {
   const {logout} = React.useContext(AuthContext);
-  const user = React.useContext(UserContext);
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
@@ -19,19 +23,30 @@ export function ProductsListScreen({navigation}) {
       ),
     });
   }, [navigation, logout]);
+  const products = useGet('/products');
+
+  function renderProduct({item: product}) {
+    return <Product product={product} />;
+  }
 
   return (
-    <View style={styles.container}>
-      <Text>Welcome to the products list</Text>
-      <Text>{user.email}</Text>
-    </View>
+    <FlatList
+      style={styles.productsList}
+      contentContainerStyle={styles.productsListContainer}
+      data={products}
+      renderItem={renderProduct}
+      keyExtractor={product => `${product.id}`}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  productsList: {
+    backgroundColor: '#fafafa',
+  },
+  productsListContainer: {
+    backgroundColor: '#fafafa',
+    paddingVertical: 8,
+    marginHorizontal: 8,
   },
 });

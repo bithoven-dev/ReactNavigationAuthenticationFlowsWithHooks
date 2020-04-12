@@ -13,7 +13,6 @@ export function useAuth() {
         case 'SET_USER':
           return {
             ...state,
-            loading: false,
             user: {...action.payload},
           };
         case 'REMOVE_USER':
@@ -68,10 +67,9 @@ export function useAuth() {
     sleep(2000).then(() => {
       SecureStorage.getItem('user').then(user => {
         if (user) {
-          dispatch(createAction('SET_USER', user));
-        } else {
-          dispatch(createAction('SET_LOADING', false));
+          dispatch(createAction('SET_USER', JSON.parse(user)));
         }
+        dispatch(createAction('SET_LOADING', false));
       });
     });
   }, []);
