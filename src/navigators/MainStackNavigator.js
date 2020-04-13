@@ -7,7 +7,13 @@ const MainStack = createStackNavigator();
 export function MainStackNavigator() {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name={'ProductsList'} component={ProductsListScreen} />
+      <MainStack.Screen
+        name={'ProductsList'}
+        component={ProductsListScreen}
+        options={{
+          title: 'Products List',
+        }}
+      />
     </MainStack.Navigator>
   );
 }

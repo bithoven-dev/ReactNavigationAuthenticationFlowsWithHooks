@@ -1,28 +1,36 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import axios from 'axios';
 
 import {HeaderIconButton} from '../components/HeaderIconButton';
 import {AuthContext} from '../contexts/AuthContext';
-import {UserContext} from '../contexts/UserContext';
 import {Product} from '../components/Product';
-import {BASE_URL} from '../config';
 import {useGet} from '../hooks/useGet';
+import {HeaderIconsContainer} from '../components/HeaderIconsContainer';
+import {ThemeContext} from '../contexts/ThemeContext';
 
 export function ProductsListScreen({navigation}) {
   const {logout} = React.useContext(AuthContext);
+  const switchTheme = React.useContext(ThemeContext);
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderIconButton
-          name={'log-out'}
-          onPress={() => {
-            logout();
-          }}
-        />
+        <HeaderIconsContainer>
+          <HeaderIconButton
+            name={'color-palette'}
+            onPress={() => {
+              switchTheme();
+            }}
+          />
+          <HeaderIconButton
+            name={'log-out'}
+            onPress={() => {
+              logout();
+            }}
+          />
+        </HeaderIconsContainer>
       ),
     });
-  }, [navigation, logout]);
+  }, [navigation, logout, switchTheme]);
   const products = useGet('/products');
 
   function renderProduct({item: product}) {
@@ -31,7 +39,6 @@ export function ProductsListScreen({navigation}) {
 
   return (
     <FlatList
-      style={styles.productsList}
       contentContainerStyle={styles.productsListContainer}
       data={products}
       renderItem={renderProduct}
@@ -41,11 +48,7 @@ export function ProductsListScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  productsList: {
-    backgroundColor: '#fafafa',
-  },
   productsListContainer: {
-    backgroundColor: '#fafafa',
     paddingVertical: 8,
     marginHorizontal: 8,
   },
