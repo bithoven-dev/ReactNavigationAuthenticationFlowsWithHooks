@@ -48,3 +48,9 @@ PS: make sure that you have installed all the required dependencies including ru
 # Videos
 
 [Login + Registration layout / Authentication Flows](https://youtu.be/rHJTv3KlZW8)
+
+[Login + Registration logic with context and memo 1](https://youtu.be/t4yKYoWRrzE)
+
+[Login + Registration with context, memo & Strapi 2](https://youtu.be/uiW7BoNyJZQ)
+
+[Authentication flow + Logout](https://youtu.be/PiTKUZEHhJU)
