@@ -54,3 +54,5 @@ PS: make sure that you have installed all the required dependencies including ru
 [Login + Registration with context, memo & Strapi 2](https://youtu.be/uiW7BoNyJZQ)
 
 [Authentication flow + Logout](https://youtu.be/PiTKUZEHhJU)
+
+[Persist user using react native secure local storage](https://youtu.be/yfNdHdGiElo)
