@@ -1,9 +1,11 @@
 # ReactNavigationAuthenticationFlowsWithHooks
 
 ## Light theme:
+
 ![](./.github/images/light.jpg)
 
 ## Dark theme:
+
 ![](./.github/images/dark.jpg)
 
 This repo is the source code for a youtube series about how to create a react native authentication system using React Navigation 5 and hooks.
@@ -39,6 +41,7 @@ yarn android
 ```
 
 For iOS:
+
 ```
 yarn ios
 ```
@@ -56,3 +59,5 @@ PS: make sure that you have installed all the required dependencies including ru
 [Authentication flow + Logout](https://youtu.be/PiTKUZEHhJU)
 
 [Persist user using react native secure local storage](https://youtu.be/yfNdHdGiElo)
+
+[Add products screen and fetch authenticated data](https://youtu.be/k4Ue5QW2Uc0)
