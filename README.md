@@ -61,3 +61,5 @@ PS: make sure that you have installed all the required dependencies including ru
 [Persist user using react native secure local storage](https://youtu.be/yfNdHdGiElo)
 
 [Add products screen and fetch authenticated data](https://youtu.be/k4Ue5QW2Uc0)
+
+[Add dark mode support to react native app](https://youtu.be/8U350Y5ZOFY)
